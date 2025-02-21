@@ -13,6 +13,12 @@ You can assume our engineers have Go and Docker installed to run your applicatio
 
 ## Submitting Your Solution
 
+1. Run Docker
+2. Verify that ports 5432 and 8080 are empty
+3. Cd into project directory or open project in IDE (e.g. .../receipt-processor-challenge)
+4. Run **start.sh** for Mac or **start.bat** for Windows (Run **stop.bat** for Windows to stop dockerized application)
+5. Use localhost:8080 as root URL to send requests
+
 Provide a link to a public repository, such as GitHub or BitBucket, that contains your code to the provided link through Greenhouse.
 
 ---
