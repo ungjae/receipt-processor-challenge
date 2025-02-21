@@ -6,15 +6,13 @@ import com.fetch.receiptprocessor.dto.ProcessReceiptResponse;
 import com.fetch.receiptprocessor.service.ReceiptService;
 import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.ErrorResponse;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -45,5 +43,29 @@ public class ReceiptController {
         } else {
             throw new NoSuchElementException();
         }
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
+        ErrorResponse response = ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, "The receipt is invalid.");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException ex) {
+        ErrorResponse response = ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, "The receipt is invalid.");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpServerErrorException.InternalServerError.class)
+    public ResponseEntity<ErrorResponse> handleInternalErrorException(HttpServerErrorException.InternalServerError ex) {
+        ErrorResponse response = ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, "The receipt is invalid.");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<ErrorResponse> handleNoSuchElementException(NoSuchElementException ex) {
+        ErrorResponse response = ErrorResponse.create(ex, HttpStatus.NOT_FOUND, "No receipt found for that ID.");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 }
