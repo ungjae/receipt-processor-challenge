@@ -1,7 +1,9 @@
 package com.fetch.receiptprocessor.service;
 
 import com.fetch.receiptprocessor.dao.ReceiptDao;
+import com.fetch.receiptprocessor.dto.GetPointsResponse;
 import com.fetch.receiptprocessor.dto.ProcessReceiptRequest;
+import com.fetch.receiptprocessor.dto.ProcessReceiptResponse;
 import com.fetch.receiptprocessor.model.Item;
 import com.fetch.receiptprocessor.model.Receipt;
 import org.springframework.stereotype.Service;
@@ -17,18 +19,21 @@ public class ReceiptService {
 
     public ReceiptService(ReceiptDao receiptDao) { this.receiptDao = receiptDao; }
 
-    public Optional<UUID> saveReceipt(ProcessReceiptRequest request) {
+    public Optional<ProcessReceiptResponse> saveReceipt(ProcessReceiptRequest request) {
         Receipt receipt = request.toReceipt();
         calculatePoints(receipt);
-        return receiptDao.saveReceipt(receipt);
+        return receiptDao.saveReceipt(receipt).map(id -> ProcessReceiptResponse.builder().withId(String.valueOf(id)).build());
     }
 
     public Optional<Receipt> findById(UUID id) {
         return receiptDao.findById(id);
     }
 
-    public Optional<Integer> getPointsById(UUID id) {
-        return receiptDao.getPointsById(id).map(Receipt::getPoints);
+    public Optional<GetPointsResponse> getPointsById(UUID id) {
+        return receiptDao.getPointsById(id)
+                .map(receiptOptional -> GetPointsResponse.builder()
+                        .withPoints(receiptOptional.getPoints())
+                        .build());
     }
 
     public void calculatePoints(Receipt receipt) {
