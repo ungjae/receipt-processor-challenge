@@ -1,5 +1,12 @@
 #!/bin/bash
 
+cleanup() {
+  echo "shutting down containers"
+  docker compose down
+  echo "bye"
+  exit 0
+}
+
 echo "starting Receipt Processor"
 
 docker compose down
