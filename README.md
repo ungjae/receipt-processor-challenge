@@ -1,23 +1,40 @@
 # Receipt Processor
 
-Build a webservice that fulfils the documented API. The API is described below. A formal definition is provided 
-in the [api.yml](./api.yml) file. We will use the described API to test your solution.
+## Run Instructions
 
-Provide any instructions required to run your application.
-
-Data does not need to persist when your application stops. It is sufficient to store information in memory. There are too many different database solutions, we will not be installing a database on our system when testing your application.
-
-## Language Selection
-
-You can assume our engineers have Go and Docker installed to run your application. Go is our preferred language, but choosing it will not give you an advantage in the evaluation. If you are not using Go, include a Dockerized setup to run the code. You should also provide detailed instructions if your Docker file requires any additional configuration to run the application.
-
-## Submitting Your Solution
-
+**Mac/Linux**
 1. Run Docker
 2. Verify that ports 5432 and 8080 are empty
-3. Cd into project directory or open project in IDE (e.g. .../receipt-processor-challenge)
-4. Run **start.sh** for Mac or **start.bat** for Windows (Run **stop.bat** for Windows to stop dockerized application)
+3. Cd into project directory (e.g. .../receipt-processor-challenge)
+4. Give permission to **start.sh** script file
+```console
+.../receipt-processor-challenge$ chmod +x ./start.sh
+```
+5. Give permission to mvnw
+```console
+.../receipt-processor-challenge$ chmod +x mvnw
+```
+6. Run **start.sh** as root user
+```console
+.../receipt-processor-challenge$ sudo ./start.sh
+```
+7. Use localhost:8080 as root URL to send requests
+8. Ctrl + C to exit
+
+**Windows**
+1. Run Docker
+2. Verify that ports 5432 and 8080 are empty
+3. Cd into project directory (e.g. .../receipt-processor-challenge)
+4. Run **start.bat**
+```console
+.../receipt-processor-challenge> ./start.bat
+```
 5. Use localhost:8080 as root URL to send requests
+6. Ctrl + C to exit
+7. Run **stop.bat** to clean up
+```console
+.../receipt-processor-challenge> ./stop.bat
+```
 
 Provide a link to a public repository, such as GitHub or BitBucket, that contains your code to the provided link through Greenhouse.
 
@@ -157,24 +174,3 @@ Breakdown:
 ```
 
 ---
-
-# FAQ
-
-### How will this exercise be evaluated?
-An engineer will review the code you submit. At a minimum they must be able to run the service and the service must provide the expected results. You
-should provide any necessary documentation within the repository. While your solution does not need to be fully production ready, you are being evaluated so
-put your best foot forward.
-
-Part of that evaluation includes running an automated testing suite against your project to confirm it matches the specified API.
-
-### I have questions about the problem statement. What should I do?
-For any requirements not specified via an example, use your best judgment to determine the expected result.
-
-### Can I provide a private repository?
-If at all possible, we prefer a public repository because we do not know which engineer will be evaluating your submission. Providing a public repository
-ensures a speedy review of your submission. If you are still uncomfortable providing a public repository, you can work with your recruiter to provide access to
-the reviewing engineer.
-
-### How long do I have to complete the exercise?
-There is no time limit for the exercise. Out of respect for your time, we designed this exercise with the intent that it should take you a few hours. But, please
-take as much time as you need to complete the work.
